@@ -24,5 +24,8 @@ def test_Product(Product_prod_1):
     assert Product_prod_1.price == 50
     assert Product_prod_1.stock == 100
 
+def test_total_categories(Category_prod_1):
+    assert Category.total_categories > 0
 
-
+def test_total_unique_products(Product_prod_1):
+    assert len(Category.total_uniq_products) > 0
