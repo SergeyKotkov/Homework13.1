@@ -1,54 +1,68 @@
 class Category:
-    name: str
-    description: str
-    product: list
     total_categories = 0
-    uniq_products = set()
-    total_uniq_products = str
+    total_uniq_products = 0
 
-    def __init__(self, name, description, products):
+    def __init__(self, name, description):
         self.name = name
         self.description = description
-        self.products = products
+        self.products = []
         Category.total_categories += 1
-        for product in products:
-            if product not in Category.uniq_products:
-                Category.uniq_products.add(product)
-        Category.total_uniq_products = len(Category.uniq_products)
 
 
-class Product():
-    name: str
-    description: str
-    product: list
-    price: float
-    stock: int
+    def add_product(self, product):
+        self.__products.append(product)
 
-    def __init__(self, name, description, product, price, stock):
-        self.price = price
-        self.stock = stock
+    def get_products(self):
+        return self.__products
+
+    def get_products_info(self):
+        products_info = []
+        for product in self.__products:
+            info = f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт."
+            products_info.append(info)
+        return products_info
+
+    @staticmethod
+    def create_product(name, description, price, quantity):
+        return Product(name, description, price, quantity)
+
+
+class Product:
+    total_unique_products = 0
+    def __init__(self, name, description, price, quantity):
         self.name = name
         self.description = description
-        self.product = product
+        self.price = price
+        self.quantity = quantity
+        Product.total_unique_products += 1
+
+    @property
+    def price(self):
+        return self._price
+
+    @price.setter
+    def price(self, new_price):
+        if new_price <= 0:
+            print("Цена введена некорректно")
+        else:
+            self._price = new_price
+
+    @staticmethod
+    def create_product(name, description, price, quantity):
+        return Product(name, description, price, quantity)
+
 
 if __name__ == '__main__':
 
-    prod_1 = Category('Яблоки', 'сладкие', ("фрукт", "красные"))
-    prod_2 = Category('Бананы', 'спелые', ('фрукт', 'желтые'))
-    prod_3 = Category('Яблоки', 'кислые', ('фрукт', 'зеленые'))
-    prod_4 = Category('Конфеты', 'вкусные', ('сладости', 'шоколадные'))
-    prod_5 = Category('Картофель', 'крупная', ('овощи', 'мытый'))
+    prod_1 = Category('Яблоки', 'сладкие')
+    prod_2 = Category('Бананы', 'спелые')
+    prod_3 = Category('Яблоки', 'кислые')
+    prod_4 = Category('Конфеты', 'вкусные')
+    prod_5 = Category('Картофель', 'крупная')
 
-    Prod_1 = Product('Яблоки', 'сладкие', ("фрукт", "красные"),50, 100)
-    Prod_2 = Product('Бананы', 'спелые', ("фрукт", "желтые"),100, 200)
-    Prod_3 = Product('Конфеты', 'сладкие', ("сладости", "шоколадные"),75, 1000)
-    Prod_4 = Product('Картофель', 'крупный', ("овощи", "мытый"),65, 2000)
+    Prod_1 = Product('Яблоки', 'сладкие', 50, 100)
+    Prod_2 = Product('Бананы', 'спелые', 100, 200)
+    Prod_3 = Product('Конфеты', 'сладкие', 75, 1000)
+    Prod_4 = Product('Картофель', 'крупный', 65, 2000)
 
-    print(f'{prod_1.total_categories}')
-    print(f'{prod_2.products}')
-    print(f'{prod_3.name}')
-    print(f'{prod_4.description}')
-    print(f'{Prod_1.price}', f'{Prod_1.stock}')
-    print(f'{Prod_2.description}')
-    print(f'{Prod_3.product}')
-    print(f'{Category.total_uniq_products}')
+print(f'{Category.total_categories}')
