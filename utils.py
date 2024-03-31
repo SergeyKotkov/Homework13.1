@@ -3,7 +3,8 @@ class Category:
     description: str
     product: list
     total_categories = 0
-    total_uniq_products = set()
+    uniq_products = set()
+    total_uniq_products = str
 
     def __init__(self, name, description, products):
         self.name = name
@@ -11,10 +12,9 @@ class Category:
         self.products = products
         Category.total_categories += 1
         for product in products:
-            Category.total_uniq_products.add(product)
-
-
-
+            if product not in Category.uniq_products:
+                Category.uniq_products.add(product)
+        Category.total_uniq_products = len(Category.uniq_products)
 
 
 class Product():
@@ -51,3 +51,4 @@ if __name__ == '__main__':
     print(f'{Prod_1.price}', f'{Prod_1.stock}')
     print(f'{Prod_2.description}')
     print(f'{Prod_3.product}')
+    print(f'{Category.total_uniq_products}')
