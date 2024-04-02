@@ -1,19 +1,23 @@
 class Category:
     total_categories = 0
+    total_products = set()
     total_uniq_products = 0
 
     def __init__(self, name, description):
         self.name = name
         self.description = description
-        self.products = []
+        self.__products = []
+        for product in self.__products:
+            Category.total_products.add(product)
+        Category.total_uniq_products = len(Category.total_products)
         Category.total_categories += 1
 
+    @property
+    def products(self):
+        return self.__products
 
     def add_product(self, product):
         self.__products.append(product)
-
-    def get_products(self):
-        return self.__products
 
     def get_products_info(self):
         products_info = []
@@ -22,9 +26,9 @@ class Category:
             products_info.append(info)
         return products_info
 
-    @staticmethod
-    def create_product(name, description, price, quantity):
-        return Product(name, description, price, quantity)
+    @classmethod
+    def create_product(cls, data):
+        return Product(**data)
 
 
 class Product:
@@ -47,9 +51,9 @@ class Product:
         else:
             self._price = new_price
 
-    @staticmethod
-    def create_product(name, description, price, quantity):
-        return Product(name, description, price, quantity)
+    @classmethod
+    def create_product(cls, data):
+        return cls(**data)
 
 
 if __name__ == '__main__':
@@ -65,4 +69,4 @@ if __name__ == '__main__':
     Prod_3 = Product('Конфеты', 'сладкие', 75, 1000)
     Prod_4 = Product('Картофель', 'крупный', 65, 2000)
 
-print(f'{Category.total_categories}')
+print(f'{Category.total_uniq_products}')
