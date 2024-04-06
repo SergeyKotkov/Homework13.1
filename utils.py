@@ -26,13 +26,13 @@ class Category:
             products_info.append(info)
         return products_info
 
-    @classmethod
-    def create_product(cls, data):
-        return Product(**data)
+    def __str__(self):
+        return f"{self.name}, количество продуктов: {len(Category.total_products)} шт."
 
 
 class Product:
     total_unique_products = 0
+
     def __init__(self, name, description, price, quantity):
         self.name = name
         self.description = description
@@ -51,13 +51,19 @@ class Product:
         else:
             self._price = new_price
 
+    def __str__(self):
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other):
+        total_value = (self.price * self.quantity) + (other.price * other.quantity)
+        return total_value
+
     @classmethod
     def create_product(cls, data):
         return cls(**data)
 
 
-if __name__ == '__main__':
-
+if __name__ == 'main':
     prod_1 = Category('Яблоки', 'сладкие')
     prod_2 = Category('Бананы', 'спелые')
     prod_3 = Category('Яблоки', 'кислые')
@@ -69,4 +75,4 @@ if __name__ == '__main__':
     Prod_3 = Product('Конфеты', 'сладкие', 75, 1000)
     Prod_4 = Product('Картофель', 'крупный', 65, 2000)
 
-print(f'{Category.total_uniq_products}')
+    print(Category.total_uniq_products)
